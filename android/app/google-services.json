@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "701331543074",
+    "firebase_url": "https://esp32-25b9b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "esp32-25b9b",
+    "storage_bucket": "esp32-25b9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701331543074:android:b262580b4377134729a67b",
+        "android_client_info": {
+          "package_name": "com.example.flutter_esp32"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701331543074-bngp6r8kigoirfpvhrgsfcjh5ba5nl1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3QlxFJMM608PBVS6pElKqkhNKj5rMBkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701331543074-bngp6r8kigoirfpvhrgsfcjh5ba5nl1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
