@@ -95,12 +95,14 @@ class _MainPage extends State<MainPage> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: const Text('Flutter Bluetooth Serial'),
+        title: const Text('Bluetooth設定'),
       ),
       body: Container(
         child: ListView(
           children: <Widget>[
-            ListTile(title: const Text('General')),
+            SizedBox(
+              height: 20,
+            ),
             SwitchListTile(
               activeColor: Colors.black87,
               title: const Text('藍芽開啟關閉'),
@@ -124,18 +126,25 @@ class _MainPage extends State<MainPage> {
               title: const Text('打開設定'),
               subtitle: Text(_bluetoothState.toString()),
               trailing: ElevatedButton(
-                style: ButtonStyle(backgroundColor:MaterialStateProperty.all(Colors.black87),),
-                child: const Text('Settings'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black87),
+                ),
+                child: const Text('設定'),
                 onPressed: () {
                   FlutterBluetoothSerial.instance.openSettings();
                 },
               ),
             ),
             ListTile(
-              title: const Text('確認權限',style: TextStyle(),),
-              subtitle: Text(_bluetoothState.toString()),
+              title: const Text(
+                '確認權限',
+                style: TextStyle(),
+              ),
+              subtitle: Text(""),
               trailing: ElevatedButton(
-                style: ButtonStyle(backgroundColor:MaterialStateProperty.all(Colors.black87),),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black87),
+                ),
                 child: const Text('測試'),
                 onPressed: () {
                   if (!(requestbluetoothScanB && requestbluetoothConnectB)) {
@@ -150,77 +159,22 @@ class _MainPage extends State<MainPage> {
               ),
             ),
             ListTile(
-              title: const Text('Local adapter address'),
+              title: const Text('連接設備位置'),
               subtitle: Text(_address),
             ),
             ListTile(
-              title: const Text('Local adapter name'),
+              title: const Text('連接設備名稱'),
               subtitle: Text(_name),
               onLongPress: null,
-            ),
-            ListTile(
-              title: _discoverableTimeoutSecondsLeft == 0
-                  ? const Text("Discoverable")
-                  : Text(
-                      "Discoverable for ${_discoverableTimeoutSecondsLeft}s"),
-              subtitle: const Text("PsychoX-Luna"),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    value: _discoverableTimeoutSecondsLeft != 0,
-                    onChanged: null,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: null,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.refresh),
-                    onPressed: () async {
-                      print('Discoverable requested');
-                      final int timeout = (await FlutterBluetoothSerial.instance
-                          .requestDiscoverable(60))!;
-                      if (timeout < 0) {
-                        print('Discoverable mode denied');
-                      } else {
-                        print(
-                            'Discoverable mode acquired for $timeout seconds');
-                      }
-                      setState(() {
-                        _discoverableTimeoutTimer?.cancel();
-                        _discoverableTimeoutSecondsLeft = timeout;
-                        _discoverableTimeoutTimer =
-                            Timer.periodic(Duration(seconds: 1), (Timer timer) {
-                          setState(() {
-                            if (_discoverableTimeoutSecondsLeft < 0) {
-                              FlutterBluetoothSerial.instance.isDiscoverable
-                                  .then((isDiscoverable) {
-                                if (isDiscoverable ?? false) {
-                                  print(
-                                      "Discoverable after timeout... might be infinity timeout :F");
-                                  _discoverableTimeoutSecondsLeft += 1;
-                                }
-                              });
-                              timer.cancel();
-                              _discoverableTimeoutSecondsLeft = 0;
-                            } else {
-                              _discoverableTimeoutSecondsLeft -= 1;
-                            }
-                          });
-                        });
-                      });
-                    },
-                  )
-                ],
-              ),
             ),
             Divider(),
             const ListTile(title: Text('設備連線')),
             ListTile(
               title: ElevatedButton(
-                style: ButtonStyle(backgroundColor:MaterialStateProperty.all(Colors.black87),),
-                child: const Text('Connect to paired device to chat'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black87),
+                ),
+                child: const Text('選擇設備連接'),
                 onPressed: () async {
                   _permissionl.requestbluetoothScan();
                   if (requestbluetoothScanB) {
@@ -243,25 +197,6 @@ class _MainPage extends State<MainPage> {
                     }
                   }
                 },
-              ),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                child: const Text('View background collected data'),
-                onPressed: (_collectingTask != null)
-                    ? () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ScopedModel<BackgroundCollectingTask>(
-                                model: _collectingTask!,
-                                child: BackgroundCollectedPage(),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                    : null,
               ),
             ),
           ],

@@ -109,10 +109,10 @@ class _ChatPage2 extends State<ChatPage2> {
       appBar: AppBar(
           backgroundColor: Colors.black87,
           title: (isConnecting
-              ? Text('Connecting chat to ' + serverName + '...')
+              ? Text('正在嘗試連接至 ' + serverName + '...')
               : isConnected
-                  ? Text('Live chat with ' + serverName)
-                  : Text('Chat log with ' + serverName))),
+                  ? Text(serverName + '連接中 ')
+                  : Text('已斷線 '))),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

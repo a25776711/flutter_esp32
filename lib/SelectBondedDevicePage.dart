@@ -86,7 +86,7 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
           if (_device.device == r.device) {
             _device.availability = _DeviceAvailability.yes;
             _device.rssi = r.rssi;
-            server=r.device;
+            server = r.device;
           }
         }
       });
@@ -124,7 +124,7 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: Text('Select device'),
+        title: Text('選擇連接裝置'),
         actions: <Widget>[
           _isDiscovering
               ? FittedBox(
