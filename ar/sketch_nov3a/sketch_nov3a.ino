@@ -23,14 +23,6 @@ int s=0,living=25,bath=26,bed=33,pin11=4,pin12=5,pin21=15,pin22=16,toilet=17,mo2
 int Ax=13,Bx=12,Cx=14,Dx=27,Ay=21,By=32,Cy=18,Dy=2;
 int td=0,hd=0;
 DHT dht(DHTPIN, DHTTYPE);
-
-void Task1_senddata(void * pvParameters){
-  BT.begin(F("kaven"));
-  for(;;){
-    
-    
-  }
-}
 void setup() {
   pinMode(mo2,OUTPUT);
   pinMode(mc1,OUTPUT);
@@ -58,7 +50,7 @@ void setup() {
   Serial.print(F("."));
   delay(500);   
   }
-  BT.begin(F("kaven"));
+  
     Serial.println("");
     Serial.println(WiFi.localIP());
     Serial.println(WiFi.RSSI());
@@ -68,6 +60,13 @@ void setup() {
     Firebase.begin(DATABASE_URL, API_KEY);
     Firebase.setDoubleDigits(5);
   dht.begin();
+  BT.begin(F("kaven"));
+  
+}
+void loop() {
+  show1(t1,r1);
+  show2(t2,r2);
+  sample();
   if (BT.available()) {
     char ch = BT.read();
     if(ch=='n')
@@ -82,11 +81,6 @@ void setup() {
       s++;
     }
   }
-}
-void loop() {
-  show1(t1,r1);
-  show2(t2,r2);
-  sample();
   delay(8);
 }
 void sample(){
