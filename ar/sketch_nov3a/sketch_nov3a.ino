@@ -27,20 +27,7 @@ DHT dht(DHTPIN, DHTTYPE);
 void Task1_senddata(void * pvParameters){
   BT.begin(F("kaven"));
   for(;;){
-    if (BT.available()) {
-    char ch = BT.read();
-    if(ch=='n')
-    {
-    memset(data, 0, sizeof(data));
-    s=0;
-    }
-    else if(ch=='p')
-      check();
-    else{
-      data[s]=ch;
-      s++;
-    }
-  }
+    
     
   }
 }
@@ -71,6 +58,7 @@ void setup() {
   Serial.print(F("."));
   delay(500);   
   }
+  BT.begin(F("kaven"));
     Serial.println("");
     Serial.println(WiFi.localIP());
     Serial.println(WiFi.RSSI());
@@ -80,17 +68,21 @@ void setup() {
     Firebase.begin(DATABASE_URL, API_KEY);
     Firebase.setDoubleDigits(5);
   dht.begin();
-
-  xTaskCreatePinnedToCore(
-    Task1_senddata, /*任務實際對應的Function*/
-    "Task1",        /*任務名稱*/
-    10000,          /*堆疊空間*/
-    NULL,           /*無輸入值*/
-    0,                 /*優先序0*/
-    &Task1,       /*對應的任務變數位址*/
-    0);                /*指定在核心0執行 */
+  if (BT.available()) {
+    char ch = BT.read();
+    if(ch=='n')
+    {
+    memset(data, 0, sizeof(data));
+    s=0;
+    }
+    else if(ch=='p')
+      check();
+    else{
+      data[s]=ch;
+      s++;
+    }
+  }
 }
-
 void loop() {
   show1(t1,r1);
   show2(t2,r2);
